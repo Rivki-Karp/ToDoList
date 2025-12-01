@@ -1,0 +1,16 @@
+# .NET 
+bin/ 
+obj/ 
+out/ 
+.vs/ 
+*.user 
+*.suo 
+*.csproj.user 
+*.sln.docstates 
+*.nupkg 
+packages/ 
+*.snupkg 
+project.lock.json 
+project.fragment.lock.json 
+artifacts/ 
+node_modules/ 
