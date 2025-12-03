@@ -7,7 +7,7 @@ function App() {
 
   async function getTodos() {
     const todos = await service.getTasks();
-    setTodos(todos);
+    setTodos(Array.isArray(todos) ? todos : []); // ← הגנה נוספת
   }
 
   async function createTodo(e) {
@@ -17,7 +17,6 @@ function App() {
     await getTodos();
   }
 
-  // ✅ תיקון מלא: שליחת todo שלם + עדכון תקין
   async function updateCompleted(todo, isComplete) {
     await service.setCompleted(todo, isComplete);
     await getTodos();
@@ -48,31 +47,23 @@ function App() {
 
       <section className="main" style={{ display: "block" }}>
         <ul className="todo-list">
-          {todos.map(todo => {
-            return (
-              <li className={todo.isComplete ? "completed" : ""} key={todo.id}>
-                <div className="view">
-                  
-                  {/* ✅ תיקון קריטי: checked במקום defaultChecked */}
-                  <input
-                    className="toggle"
-                    type="checkbox"
-                    checked={todo.isComplete}
-                    onChange={(e) =>
-                      updateCompleted(todo, e.target.checked)
-                    }
-                  />
-
-                  <label>{todo.name}</label>
-
-                  <button
-                    className="destroy"
-                    onClick={() => deleteTodo(todo.id)}
-                  ></button>
-                </div>
-              </li>
-            );
-          })}
+          {(Array.isArray(todos) ? todos : []).map(todo => (
+            <li key={todo.id} className={todo.isComplete ? "completed" : ""}>
+              <div className="view">
+                <input
+                  className="toggle"
+                  type="checkbox"
+                  checked={todo.isComplete}
+                  onChange={(e) => updateCompleted(todo, e.target.checked)}
+                />
+                <label>{todo.name}</label>
+                <button
+                  className="destroy"
+                  onClick={() => deleteTodo(todo.id)}
+                ></button>
+              </div>
+            </li>
+          ))}
         </ul>
       </section>
     </section>

@@ -1,12 +1,10 @@
 import axios from 'axios';
 
-// שימוש במשתנה סביבה במקום כתובת קבועה
-const apiUrl = process.env.REACT_APP_API_URL; 
+// השתמש במשתנה סביבה
+const apiUrl = process.env.REACT_APP_API_URL;
 
-// הגדרת כתובת ברירת מחדל (Config Defaults)
 axios.defaults.baseURL = apiUrl;
 
-// Interceptor לטיפול בשגיאות
 axios.interceptors.response.use(
   response => response,
   error => {
@@ -18,7 +16,8 @@ axios.interceptors.response.use(
 const api = {
   getTasks: async () => {
     const result = await axios.get('/items');
-    return result.data;
+    // אם התשובה לא מערך, מחזיר מערך ריק
+    return Array.isArray(result.data) ? result.data : [];
   },
 
   addTask: async (name) => {
