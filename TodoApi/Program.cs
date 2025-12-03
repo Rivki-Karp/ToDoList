@@ -36,7 +36,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // הפעלת Swagger (רק בסביבת פיתוח)
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
